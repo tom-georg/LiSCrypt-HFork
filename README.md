@@ -147,3 +147,8 @@ Für die Version 0.9.5 von LiSCrypt wurden zwei externe Sicherheitsprüfungen du
 
 * Verhalten bei parallelem Doppelklick auf mehrere verschlüsselte Dokumente
 * Egränzung/Ausschwärfung der Quelltext-Dokumentation
+
+## Ausführbare Datei erstellen
+
+
+pyinstaller --clean src/LiSCryptStart.py

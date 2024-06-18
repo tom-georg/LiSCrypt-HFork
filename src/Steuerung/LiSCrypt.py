@@ -44,7 +44,6 @@ import logging
 import os
 import re
 import tempfile
-import traceback
 import sys
 
 class QController:

@@ -221,7 +221,8 @@ class Prozessspeicherwerkzeuge:
 	"""
 	Stellt statische Methoden zur Prozessspeicherverwaltung zur Verfügung
 	"""
-	T_BYTES_STRING_NONETYPE = typing.TypeVar('T_BYTES_STRING_NONE', bytes, str, type(None))
+	
+	T_BYTES_STRING_NONE = typing.TypeVar('T_BYTES_STRING_NONE', bytes, str, type(None))
 
 	@staticmethod
 	def verhindereCoreDumpPOSIX():
@@ -232,7 +233,7 @@ class Prozessspeicherwerkzeuge:
 			resource.setrlimit(resource.RLIMIT_CORE, [0, 0]) # Verhinderung von core dumps unter unixoiden Betriebssystemen
 
 	@staticmethod
-	def ueberschreibeBytesequenzOderString(pZielobjektObjekt: T_BYTES_STRING_NONETYPE, pStringBestaetigungBoolean=False):
+	def ueberschreibeBytesequenzOderString(pZielobjektObjekt: T_BYTES_STRING_NONE, pStringBestaetigungBoolean=False):
 		"""
 		Überschreibt pZielobjektObjekt im Arbeitsspeicher, wenn es sich dabei um eine Bytesequenz oder einen String mit
 		Länge > 1 handelt. Das Überschreiben eines Strings muss darüber hinaus über pStringBestaetigungBoolean=True
