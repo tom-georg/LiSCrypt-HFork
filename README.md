@@ -101,8 +101,12 @@ Diese Anleitung beschreibt die Schritte zur Installation von Python, pip, und zu
 
 ### Ausrollen
 
-Zum Ausrollen von LiSCrypt in ausführbarer Form kann [PyInstaller](https://www.pyinstaller.org/) verwendet werden. Dabei ist insbesondere auf *hidden imports* und die Einbeziehung der [Visual C++ Runtime-Biblitoheken](https://support.microsoft.com/de-de/help/2977003/the-latest-supported-visual-c-downloads) zu achten.
+#### MacOS
 
+Über die virtuelle Python umgebung kann eine auführbare Datei über folgenden Befehl erstellt werden:
+'''
+pyinstaller LiSCryptStart.spec
+'''
 ### LiSCrypt Shell-Erweiterung (Windows)
 
 Unter Windows existiert seit Version 1.0.0 von LiSCrypt eine Shell-Erweiterung. Damit können die wesentlichen Programmfunktionen auch per Rechtsklick auf Dateien/Ordner ausgeführt werden. Die Shell-Erweiterung wurde mit Visual Studio 2019 in C++ unter Verwendung von ATL erstellt. Der Quelltext ist ebenfalls unter https://github.com/MaWe2019/LiSCrypt_public/releases verfübar.
@@ -138,10 +142,6 @@ LiSCrypt ist lizenziert unter der GNU General Public License Version 3 (GNU GPL 
 
 Für die Version 0.9.5 von LiSCrypt wurden zwei externe Sicherheitsprüfungen durchgeführt, bei denen auch das Verschlüsselungsverfahren in den Blick genommen wurde.
 
-## Mitwirkende
-
-* Dr. Albert Kapune, Tests
-* Arbeitsbereich 5 von [QUA-LiS NRW](https://www.qua-lis.nrw.de), Verbesserungsvorschläge
 
 ## ToDo
 
@@ -151,4 +151,3 @@ Für die Version 0.9.5 von LiSCrypt wurden zwei externe Sicherheitsprüfungen du
 ## Ausführbare Datei erstellen
 
 
-pyinstaller --clean src/LiSCryptStart.py
