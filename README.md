@@ -92,7 +92,7 @@ Diese Anleitung beschreibt die Schritte zur Installation von Python, pip, und zu
    '''
    
 2. Starten des Programms:
-    ```
+    ```sh
     python3 -m Steuerung.LiSCrypt
     ```
     oder Import in eine beliebige Python-IDE. Entwickelt wurde LiSCrypt mit der Community-Variante von [PyCharm](https://www.jetbrains.com/pycharm/download/).
