@@ -1,4 +1,4 @@
-# LiSCrypt 1.0.11
+# LiSCrypt-HFork 1.0.11
 LiSCrypt ist ein Programm zur symmetrischen Verschlüsselung von Einzeldateien unter Verwendung von AES-GCM-256 bzw. einer Kombination von ChaCha20 und HMAC für sehr große Dateien.
 
 Es wurde ursprünglich von der Qualitäts- und UnterstützungsAgentur - Landesinstitut für Schule in Nordrhein-Westfalen entwickelt.
@@ -28,6 +28,11 @@ Nähere Informationen zu den benötigten Fremdquellen finden sich in der Dokumen
 # Anleitung zur Installation und Einrichtung
 
 Diese Anleitung beschreibt die Schritte zur Installation von Python, pip, und zur Einrichtung einer virtuellen Umgebung. Anschließend wird erklärt, wie die Abhängigkeiten aus der Datei `requirements.txt` installiert werden.
+
+## Schritt 1: Repository laden
+
+1. GitRepository laden.
+2. Mit dem Terminal in den Ordner der requirements.txt nagivieren.
 
 ## Schritt 1: Python installieren
 
@@ -124,9 +129,6 @@ Sie möchten uns bei der Weiterentwicklung von LiSCrypt unterstützen? Wenden Si
 
 Die Versionierung von LiSCrypt folgt dem [SemVer](http://semver.org/)-Schema. Der [Quelltext zu den verschiedenen Versionen](https://github.com/MaWe2019/LiSCrypt_public/releases) wird in Form von zip-Archiven in diesem Repository zur Verfügung gestellt.
 
-## Copyright
-
-* [QUA-LiS NRW](https://www.qua-lis.nrw.de), **Projektleitung:** Martin Weise
 
 ## Lizenz
 
