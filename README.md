@@ -9,18 +9,18 @@ Die folgenden Ausführungen sollen Ihnen helfen, eine lokale Kopie von LiSCrypt 
 ### Voraussetzungen
 Voraussetzungen für die Verwendung von LiSCrypt
 
-* Python 3.9.x
+* Python 3.12.x
 * Windows, macOS oder Linux
 
 ### Benötigte Bibliotheken
 LiSCrypt 1.0.10 wurde u.a. mit den im Folgenden angegebenen Versionen getestet. Möglicherweise funktionieren insb. neuere Versionen ebenfalls.
 
 * [base91, Version 1.0.1](https://github.com/aberaud/base91-python) - Base91-Kodiere/-Dekodierer
-* [pyca/cryptography, Version 36.0.1](https://cryptography.io/en/latest/) - Kryptografie-Backend
-* [psutil, Version 5.9.0](https://psutil.readthedocs.io) - Bibliothek für die Ermittlung von Systeminformationen
-* [PyQt 5, Version 5.15.6](https://riverbankcomputing.com/software/pyqt/intro) - Python-Schnittstelle zum GUI-Framework Qt 5
+* [pyca/cryptography, Version 41.0.1](https://cryptography.io/en/latest/) - Kryptografie-Backend
+* [psutil, Version 5.9.5](https://psutil.readthedocs.io) - Bibliothek für die Ermittlung von Systeminformationen
+* [PyQt 5, Version 5.15.10](https://riverbankcomputing.com/software/pyqt/intro) - Python-Schnittstelle zum GUI-Framework Qt 5
 * Unter Windows: [pywin32, Version 303](https://github.com/mhammond/pywin32) - Bibliothek für Zugriff auf die Windows API
-* [PyYAML, Version 6.0](https://pyyaml.org/) - Bibliothek für Im- und Export von YAML-Dateien
+* [PyYAML, Version 6.0.1](https://pyyaml.org/) - Bibliothek für Im- und Export von YAML-Dateien
 
 Nähere Informationen zu den benötigten Fremdquellen finden sich in der Dokumentation.
 
