@@ -1,4 +1,4 @@
-# LiSCrypt 1.0.10
+# LiSCrypt 1.0.11
 LiSCrypt ist ein Programm zur symmetrischen Verschlüsselung von Einzeldateien unter Verwendung von AES-GCM-256 bzw. einer Kombination von ChaCha20 und HMAC für sehr große Dateien.
 
 Es wurde ursprünglich von der Qualitäts- und UnterstützungsAgentur - Landesinstitut für Schule in Nordrhein-Westfalen entwickelt.
@@ -80,14 +80,19 @@ Diese Anleitung beschreibt die Schritte zur Installation von Python, pip, und zu
 - Um die virtuelle Umgebung zu deaktivieren, den Befehl `deactivate` eingeben.
 - Um sicherzustellen, dass alle Abhängigkeiten korrekt installiert wurden, überprüfen, ob keine Fehlermeldungen während der Installation aufgetreten sind.
 
-### Start des Programms
-1. Starten des Programms:
+# Start des Programms
+1. Virtuelle Umgebung aktivieren
+   '''sh
+   source venv/bin/activate
+   '''
+   
+2. Starten des Programms:
     ```
     python3 -m Steuerung.LiSCrypt
     ```
     oder Import in eine beliebige Python-IDE. Entwickelt wurde LiSCrypt mit der Community-Variante von [PyCharm](https://www.jetbrains.com/pycharm/download/).
     
-2. Test aller Programmfunktionen (Verschlüsseln, Entschlüsseln, Vernichten) mit Dummy-Dateien.
+3. Test aller Programmfunktionen (Verschlüsseln, Entschlüsseln, Vernichten) mit Dummy-Dateien.
 
 ### Ausrollen
 
