@@ -107,10 +107,6 @@ Zum Ausrollen von LiSCrypt in ausführbarer Form kann [PyInstaller](https://www.
 
 Unter Windows existiert seit Version 1.0.0 von LiSCrypt eine Shell-Erweiterung. Damit können die wesentlichen Programmfunktionen auch per Rechtsklick auf Dateien/Ordner ausgeführt werden. Die Shell-Erweiterung wurde mit Visual Studio 2019 in C++ unter Verwendung von ATL erstellt. Der Quelltext ist ebenfalls unter https://github.com/MaWe2019/LiSCrypt_public/releases verfübar.
 
-## Beiträge zur Weiterentwicklung
-
-Sie möchten uns bei der Weiterentwicklung von LiSCrypt unterstützen? Wenden Sie sich an Martin Weise bei [QUA-LiS NRW](https://www.qua-lis.nrw.de)
-
 ### Quelltext-Formatierung
 
 * Weitestgehende Verwendung von camelCase (entgegen der PEP8-Spezifikation)
@@ -137,11 +133,6 @@ LiSCrypt ist lizenziert unter der GNU General Public License Version 3 (GNU GPL 
 ## Sicherheitsaudits
 
 Für die Version 0.9.5 von LiSCrypt wurden zwei externe Sicherheitsprüfungen durchgeführt, bei denen auch das Verschlüsselungsverfahren in den Blick genommen wurde.
-
-## Mitwirkende
-
-* Dr. Albert Kapune, Tests
-* Arbeitsbereich 5 von [QUA-LiS NRW](https://www.qua-lis.nrw.de), Verbesserungsvorschläge
 
 ## ToDo
 
