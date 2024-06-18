@@ -24,31 +24,70 @@ LiSCrypt 1.0.10 wurde u.a. mit den im Folgenden angegebenen Versionen getestet. 
 
 Nähere Informationen zu den benötigten Fremdquellen finden sich in der Dokumentation.
 
-### Installation und erster Start
-1. Herunterladen und Installieren von [Python 3.9.x](https://www.python.org/).
+### Installation
+# Anleitung zur Installation und Einrichtung
 
-    Entsprechend des persönlichen Bedarfs können Schritte 2, 3 und 4 entweder systemweit oder alternativ unter Verwendung von *virtualenv* durchgeführt werden.
+Diese Anleitung beschreibt die Schritte zur Installation von Python, pip, und zur Einrichtung einer virtuellen Umgebung. Anschließend wird erklärt, wie die Abhängigkeiten aus der Datei `requirements.txt` installiert werden.
 
-2. Update von pip:
-    ```
-    python3 -m pip install --upgrade pip
-    ```
-    
-3. Installieren der benötigten Abhängigkeiten (in den Versionen, mit denen LiSCrypt 1.0.10 getestet wurde):
-    ```
-    pip3 install base91==1.0.1 cryptography==36.0.1 psutil==5.9.0 PyQt5==5.15.6 PyYAML==6.0 pywin32==303  
-    ```
-   *Hinweis:* Das Paket pywin32 existiert nur unter Windows und muss z.B. unter macOS oder Linux ausgelassen werden.
+## Schritt 1: Python installieren
 
-4. Herunterladen / Auspacken des LiSCrypt-Quelltextes, z.B. von https://github.com/MaWe2019/LiSCrypt_public/releases
+1. Besuchen der offiziellen Python-Website: [https://www.python.org/](https://www.python.org/)
+2. Herunterladen der neuesten Python-Version (Python 3.12 wird empfohlen).
+3. Installieren von Python:
+   - Unter Windows: Den Installer starten und die Option "Add Python to PATH" aktivieren, bevor auf "Install Now" geklickt wird.
+   - Unter macOS/Linux: Den Anweisungen auf der Website folgen oder einen Paketmanager verwenden (z.B. `brew install python` für Homebrew auf macOS oder `sudo apt-get install python3` für Ubuntu/Debian-basierte Systeme).
 
-5. Starten des Programms:
+## Schritt 2: pip installieren
+
+1. Überprüfen, ob pip bereits installiert ist, indem der folgende Befehl im Terminal eingegeben wird:
+   ```sh
+   pip --version
+   ```
+2. Wenn pip nicht installiert ist, das Installations-Skript von [https://bootstrap.pypa.io/get-pip.py](https://bootstrap.pypa.io/get-pip.py) herunterladen.
+3. Das Installations-Skript ausführen:
+   ```sh
+   python get-pip.py
+   ```
+
+## Schritt 3: Virtuelle Umgebung einrichten
+
+1. Erstellen einer virtuellen Umgebung:
+   ```sh
+   python -m venv venv
+   ```
+   Dies erstellt ein Verzeichnis namens `venv`, das die virtuelle Umgebung enthält.
+
+2. Aktivieren der virtuellen Umgebung:
+   - Unter Windows:
+     ```sh
+     .\venv\Scripts\activate
+     ```
+   - Unter macOS/Linux:
+     ```sh
+     source venv/bin/activate
+     ```
+
+## Schritt 4: Abhängigkeiten installieren
+
+1. Sicherstellen, dass die virtuelle Umgebung aktiviert ist (es sollte `(venv)` in der Kommandozeile zu sehen sein).
+2. Installieren der Abhängigkeiten aus der `requirements.txt`-Datei:
+   ```sh
+   pip install -r requirements.txt
+   ```
+
+## Zusätzliche Hinweise
+
+- Um die virtuelle Umgebung zu deaktivieren, den Befehl `deactivate` eingeben.
+- Um sicherzustellen, dass alle Abhängigkeiten korrekt installiert wurden, überprüfen, ob keine Fehlermeldungen während der Installation aufgetreten sind.
+
+### Start des Programms
+1. Starten des Programms:
     ```
     python3 -m Steuerung.LiSCrypt
     ```
     oder Import in eine beliebige Python-IDE. Entwickelt wurde LiSCrypt mit der Community-Variante von [PyCharm](https://www.jetbrains.com/pycharm/download/).
     
-6. Test aller Programmfunktionen (Verschlüsseln, Entschlüsseln, Vernichten) mit Dummy-Dateien.
+2. Test aller Programmfunktionen (Verschlüsseln, Entschlüsseln, Vernichten) mit Dummy-Dateien.
 
 ### Ausrollen
 
