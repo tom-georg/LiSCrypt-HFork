@@ -129,5 +129,5 @@ coverage.xml
 
 # Other
 *.spec
-src/Steuerung/__pycache__/LiSCrypt.cpython-312.pyc
-src/Darstellung/__pycache__/__init__.cpython-312.pyc
+
+__pycache__/
