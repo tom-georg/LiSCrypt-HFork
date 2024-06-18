@@ -1,0 +1,6 @@
+base91==1.0.1
+cryptography==41.0.1
+psutil==5.9.5
+PyQt5==5.15.10
+PyYAML==6.0.1
+ 
