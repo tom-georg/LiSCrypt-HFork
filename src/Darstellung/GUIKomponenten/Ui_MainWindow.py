@@ -621,10 +621,8 @@ class Ui_MainWindow(QtWidgets.QMainWindow):
 		hpos = (screen.width() - mysize.width()) / 2
 		# Und die vertikale Position analog
 		vpos = (screen.height() - mysize.height()) / 2
-		# Fenster an  errechnere Position bewegen
-		# parse hpos float to int
-		hpos = int(hpos)
-		vpos = int(vpos)
+		
+
 		self.move(hpos, vpos)
 
 	def zeigeInNormalgroesseFallsMinimiert(self):
