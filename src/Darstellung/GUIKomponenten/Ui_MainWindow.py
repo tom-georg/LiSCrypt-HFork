@@ -622,6 +622,9 @@ class Ui_MainWindow(QtWidgets.QMainWindow):
 		# Und die vertikale Position analog
 		vpos = (screen.height() - mysize.height()) / 2
 		
+		# Parse zu int (PyQt5 erwartet int)
+		hpos = int(hpos)
+		vpos = int(vpos)
 
 		self.move(hpos, vpos)
 
