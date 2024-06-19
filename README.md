@@ -1,4 +1,4 @@
-# LiSCrypt-HFork 1.0.11
+# Inoffizieller LiSCrypt Fork
 LiSCrypt ist ein Programm zur symmetrischen Verschlüsselung von Einzeldateien unter Verwendung von AES-GCM-256 bzw. einer Kombination von ChaCha20 und HMAC für sehr große Dateien.
 
 Es wurde ursprünglich von der Qualitäts- und UnterstützungsAgentur - Landesinstitut für Schule in Nordrhein-Westfalen entwickelt.
