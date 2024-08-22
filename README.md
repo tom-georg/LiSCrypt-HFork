@@ -104,9 +104,11 @@ Diese Anleitung beschreibt die Schritte zur Installation von Python, pip, und zu
 #### MacOS
 
 Über die virtuelle Python umgebung kann eine auführbare Datei über folgenden Befehl erstellt werden:
-'''
+
+'''sh
 pyinstaller LiSCryptStart.spec
 '''
+
 ### LiSCrypt Shell-Erweiterung (Windows)
 
 Unter Windows existiert seit Version 1.0.0 von LiSCrypt eine Shell-Erweiterung. Damit können die wesentlichen Programmfunktionen auch per Rechtsklick auf Dateien/Ordner ausgeführt werden. Die Shell-Erweiterung wurde mit Visual Studio 2019 in C++ unter Verwendung von ATL erstellt. Der Quelltext ist ebenfalls unter https://github.com/MaWe2019/LiSCrypt_public/releases verfübar.
