@@ -36,8 +36,8 @@ __author__ = 'Qualitäts- und UnterstützungsAgentur - Landesinstitut für Schul
 __license__ = 'GNU General Public License Version 3 (GNU GPL v3)'
 __version__ = '1.0.12'
 __year__ = '2022'
-__maintainer__ = 'Martin Weise'
-__email__ = 'martin.weise@qua-lis.nrw.de'
+__maintainer__ = 'Thomas Georg'
+__email__ = ''
 __status__ = 'production'
 __docformat__ = 'reStructuredText'
 

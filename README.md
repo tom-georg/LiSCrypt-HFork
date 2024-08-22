@@ -89,9 +89,9 @@ Diese Anleitung beschreibt die Schritte zur Installation von Python, pip, und zu
 
 # Start des Programms
 1. Virtuelle Umgebung aktivieren
-   '''sh
+   ```sh
    source venv/bin/activate
-   '''
+   ```s
    
 2. Starten des Programms:
     ```sh
