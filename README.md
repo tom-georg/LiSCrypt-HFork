@@ -105,9 +105,9 @@ Diese Anleitung beschreibt die Schritte zur Installation von Python, pip, und zu
 
 Über die virtuelle Python umgebung kann eine auführbare Datei über folgenden Befehl erstellt werden:
 
-'''sh
+```sh
 pyinstaller LiSCryptStart.spec
-'''
+```
 
 ### LiSCrypt Shell-Erweiterung (Windows)
 
