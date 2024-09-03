@@ -34,7 +34,7 @@ import tempfile
 # Allgemeine Konstanten:
 __author__ = 'Qualitäts- und UnterstützungsAgentur - Landesinstitut für Schule Nordrhein-Westfalen (QUA-LiS NRW)'
 __license__ = 'GNU General Public License Version 3 (GNU GPL v3)'
-__version__ = '1.0.10.1'
+__version__ = '1.0.10'
 __year__ = '2022'
 __maintainer__ = 'Thomas Georg'
 __email__ = ''
