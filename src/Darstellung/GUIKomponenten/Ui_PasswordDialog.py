@@ -283,6 +283,7 @@ class Ui_PasswordDialog(QtWidgets.QDialog):
 		"""
 		if Ui_PasswordDialog.kGemerktesPasswortBytes_LOESCHEN is None:
 			lPasswortZurUeberpruefungString = self.sPasswortLineEdit.text()
+			
 		else:
 			lPasswortZurUeberpruefungString = Ui_PasswordDialog.kGemerktesPasswortBytes_LOESCHEN.decode() # Als Bytesequenz gemerktes Passwort in String decodieren
 		if len(lPasswortZurUeberpruefungString) >= LiSKonstanten.C_PASSWORT_SCHLUESSELDATEI_MINLAENGE \

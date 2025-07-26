@@ -51,13 +51,14 @@ C_SCHLUESSELART_PASSWORT_LITERAL = 'Passwort'
 C_SCHLUESSELART_SCHLUESSELDATEI_LITERAL = 'Schlüsseldatei'
 
 # Konstanten für IQB-Variante von LiSCrypt
-C_IQB_VERSION = False
+C_IQB_VERSION = True
 
 # Konstanten für Programmname
 C_PROGRAMMNAME = 'LiSCrypt' + (' IQB' if C_IQB_VERSION is True else '')
 
 # Konstanten für Endung verschlüsselter Dateien (zweingend in Kleinschreibung, da Pfade mittels str.lower() verglichen werden):
 C_DATEIENDUNG = '.lisx' if C_IQB_VERSION is False else '.lisq'
+#C_DATEIENDUNG = '.lisq' if C_IQB_VERSION is False else '.lisq'
 
 # Konstanten für die (zur Entschlüsselung) erforderlliche LiSCrypt-Version
 C_ERFORDERLICHE_LISCRYPT_VERSION = '1.0.9'
