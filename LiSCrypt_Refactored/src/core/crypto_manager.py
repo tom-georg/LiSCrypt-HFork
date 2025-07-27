@@ -34,20 +34,32 @@ class CryptoManager:
             # Add other strategies here as they are implemented
         }
 
-    def encrypt_file(self, input_file_path: str, output_file_path: str, master_key: bytes, method_id: int):
+    def encrypt_file(self, input_file_path: str, output_file_path: str, password: str, method_id: int, keyfile_path: str = None):
         """Encrypts a file using the specified method."""
         strategy = self._strategies.get(method_id)
         if not strategy:
             raise exceptions.LiSCryptError(f"Unsupported encryption method ID: {method_id}")
-        strategy.encrypt(input_file_path, output_file_path, master_key)
+        
+        # For now, we only support password authentication in AES-GCM
+        # Keyfile support can be added later if needed
+        if keyfile_path:
+            raise exceptions.LiSCryptError("Keyfile authentication not yet supported")
+            
+        strategy.encrypt(input_file_path, output_file_path, password, method_id)
 
-    def decrypt_file(self, input_file_path: str, output_file_path: str, master_key: bytes):
+    def decrypt_file(self, input_file_path: str, output_file_path: str, password: str, keyfile_path: str = None):
         """Decrypts a file by reading its header and selecting the appropriate strategy."""
         method_id = self._get_method_id_from_file(input_file_path)
         strategy = self._strategies.get(method_id)
         if not strategy:
             raise exceptions.LiSCryptError(f"Unsupported decryption method ID: {method_id}")
-        strategy.decrypt(input_file_path, output_file_path, master_key)
+            
+        # For now, we only support password authentication in AES-GCM
+        # Keyfile support can be added later if needed
+        if keyfile_path:
+            raise exceptions.LiSCryptError("Keyfile authentication not yet supported")
+            
+        strategy.decrypt(input_file_path, output_file_path, password)
 
     def _get_method_id_from_file(self, file_path: str) -> int:
         """Reads the encryption method ID from the file header."""

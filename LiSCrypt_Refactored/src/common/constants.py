@@ -134,3 +134,7 @@ GENERATED_KEYFILE_MAX_LENGTH = 512
 
 # Password/Keyfile Minimum Length
 PASSWORD_KEYFILE_MIN_LENGTH = 8
+
+# File Format Constants
+FILE_HEADER_LENGTH = 6  # "LiSX" (4 bytes) + method ID (2 bytes)
+METHOD_INFO_LENGTH = 18  # Additional method-specific header info

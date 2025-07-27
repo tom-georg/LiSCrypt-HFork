@@ -1,0 +1,17 @@
+# LiSCrypt Refactored - Dependencies
+# 
+# Core cryptographic library
+cryptography>=3.4.8
+
+# GUI framework
+PyQt5>=5.15.4
+
+# For Python 3.9+ compatibility
+typing-extensions>=3.10.0; python_version < "3.9"
+
+# Development dependencies (optional)
+# pytest>=6.2.4
+# pytest-qt>=4.0.2
+# black>=21.5b2
+# flake8>=3.9.2
+# mypy>=0.902

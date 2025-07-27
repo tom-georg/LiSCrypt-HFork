@@ -24,6 +24,7 @@ import struct
 from cryptography.hazmat.primitives.ciphers import Cipher, algorithms, modes
 from cryptography.hazmat.primitives import hashes, hmac
 from cryptography.hazmat.backends import default_backend
+from cryptography import exceptions as cryptography_exceptions
 
 from .base_strategy import BaseStrategy
 from ...common import constants, exceptions
@@ -169,34 +170,8 @@ class ChaCha20V3_1Strategy(BaseStrategy):
                 outfile.write(decrypted_full_content[offset:])
 
         # Restore original file metadata (modification and access times)
-        # This requires the original_modification_time and original_access_time from header_data
-        # and a helper function to set file times.
-        # For now, this is omitted.
-        with open(input_file_path, 'rb') as infile:
-            header_data = self._read_header(infile)
-
-            encryption_key = key_derivation.expand_key(master_key, b"chacha20-v3.1-key", constants.CHACHA20_KEY_LENGTH)
-            hmac_key = key_derivation.expand_key(master_key, b"chacha20-v3.1-hmac-key", constants.HMAC_SHA512_KEY_LENGTH)
-
-            decryptor = Cipher(
-                algorithms.ChaCha20(encryption_key, header_data['nonce']),
-                mode=None,
-                backend=default_backend()
-            ).decryptor()
-
-            hmac_builder = hmac.HMAC(hmac_key, hashes.SHA512(), backend=default_backend())
-
-            # Authenticate header
-            infile.seek(0)
-            header_bytes = infile.read(header_data['header_length'])
-            hmac_builder.update(header_bytes)
-
-            # Authenticate and decrypt null byte sequence
-            null_bytes_encrypted = infile.read(5)
-            hmac_builder.update(null_bytes_encrypted)
-            null_bytes_decrypted = decryptor.update(null_bytes_encrypted)
-            if null_bytes_decrypted != b'\x00\x00\x00\x00\x00':
-                raise exceptions.LiSCryptError("Null byte sequence not recognized.")
+        if header_data.get('original_modification_time') and header_data.get('original_access_time'):
+            os.utime(output_file_path, (header_data['original_access_time'], header_data['original_modification_time']))
 
             # Authenticate and decrypt original filename
             original_filename_len = header_data['original_filename_length']
@@ -257,9 +232,8 @@ class ChaCha20V3_1Strategy(BaseStrategy):
                 outfile.write(decrypted_full_content[offset:])
 
         # Restore original file metadata (modification and access times)
-        # This requires the original_modification_time and original_access_time from header_data
-        # and a helper function to set file times.
-        # For now, this is omitted.
+        if header_data.get('original_modification_time') and header_data.get('original_access_time'):
+            os.utime(output_file_path, (header_data['original_access_time'], header_data['original_modification_time']))
 
     def _create_header(self, file_path: str, salt: bytes, nonce: bytes) -> bytes:
         """Creates the header for a ChaCha20+HMAC v3.1 encrypted file."""
@@ -282,3 +256,48 @@ class ChaCha20V3_1Strategy(BaseStrategy):
         header += struct.pack('>Q', len(original_filename))
         header += struct.pack('>H', len(constants.REQUIRED_LISCRYPT_VERSION.encode()))
         return header
+
+    def _read_header(self, file_handle) -> dict:
+        """Reads and parses the header from a ChaCha20+HMAC v3.1 encrypted file."""
+        header_data = {}
+        
+        # Read file signature
+        signature = file_handle.read(4)
+        if signature != b'LiSX':
+            raise exceptions.LiSCryptError("Invalid file signature")
+        
+        # Read method ID
+        method_id = struct.unpack('>H', file_handle.read(2))[0]
+        if method_id != constants.METHOD_CHACHA20_V3_1:
+            raise exceptions.LiSCryptError(f"Unexpected method ID: {method_id}")
+        
+        # Read Scrypt parameters
+        header_data['scrypt_n'] = struct.unpack('>Q', file_handle.read(8))[0]
+        header_data['scrypt_r'] = struct.unpack('>I', file_handle.read(4))[0]
+        header_data['scrypt_p'] = struct.unpack('>I', file_handle.read(4))[0]
+        
+        # Read salt
+        salt_len = struct.unpack('>I', file_handle.read(4))[0]
+        header_data['salt'] = file_handle.read(salt_len)
+        
+        # Read nonce
+        nonce_len = struct.unpack('>I', file_handle.read(4))[0]
+        header_data['nonce'] = file_handle.read(nonce_len)
+        
+        # Read original file times
+        header_data['original_modification_time'] = struct.unpack('>Q', file_handle.read(8))[0] / 1e9
+        header_data['original_access_time'] = struct.unpack('>Q', file_handle.read(8))[0] / 1e9
+        
+        # Read original file size
+        header_data['original_file_size'] = struct.unpack('>Q', file_handle.read(8))[0]
+        
+        # Read original filename length
+        header_data['original_filename_length'] = struct.unpack('>Q', file_handle.read(8))[0]
+        
+        # Read required LiSCrypt version length  
+        header_data['required_liscrypt_version_length'] = struct.unpack('>H', file_handle.read(2))[0]
+        
+        # Calculate header length
+        header_data['header_length'] = file_handle.tell()
+        
+        return header_data

@@ -1,0 +1,34 @@
+site_name: LiSCrypt Documentation
+site_description: Comprehensive documentation for the refactored LiSCrypt file encryption application
+
+site_url: https://mydomain.org/mysite
+
+theme:
+  name: material
+  features:
+    - content.code.copy
+    - navigation.sections
+    - navigation.top
+  palette:
+    - scheme: default
+      toggle:
+        icon: material/brightness-7
+        name: Switch to dark mode
+    - scheme: slate
+      toggle:
+        icon: material/brightness-4
+        name: Switch to light mode
+
+markdown_extensions:
+  - codehilite
+  - admonition
+  - pymdownx.details
+  - pymdownx.superfences
+  - pymdownx.tabbed:
+      alternate_style: true
+
+nav:
+  - Home: index.md
+  - File Format: fileformat.md
+  - Encryption: encryption.md
+  - Debugging Guide: debugging.md
