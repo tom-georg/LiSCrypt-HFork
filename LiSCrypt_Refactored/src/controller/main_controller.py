@@ -22,6 +22,7 @@ import os
 from typing import List, Optional
 
 from ..core.crypto_manager import CryptoManager
+from ..core.crypto_constants import METHOD_AES_GCM_V3, METHOD_CHACHA20_V3_1
 from ..common import constants, exceptions
 
 
@@ -103,9 +104,9 @@ class MainController:
             # Choose encryption method based on file size
             file_size = os.path.getsize(file_path)
             if file_size > constants.AES_GCM_MAX_FILE_SIZE:
-                method_id = constants.METHOD_CHACHA20_V3_1
+                method_id = METHOD_CHACHA20_V3_1
             else:
-                method_id = constants.METHOD_AES_GCM_V3
+                method_id = METHOD_AES_GCM_V3
 
             # Encrypt the file
             self.crypto_manager.encrypt_file(file_path, output_path, self._password, method_id, self._keyfile_path)

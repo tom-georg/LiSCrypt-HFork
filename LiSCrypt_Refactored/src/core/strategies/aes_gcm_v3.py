@@ -14,7 +14,14 @@ from cryptography.hazmat.primitives import hashes
 from cryptography.hazmat.backends import default_backend
 from cryptography import exceptions as cryptography_exceptions
 
-from src.common import constants, exceptions
+from ..crypto_constants import (
+    SCRYPT_SALT_LENGTH, SCRYPT_N, SCRYPT_R, SCRYPT_P,
+    AES_GCM_NONCE_LENGTH, REQUIRED_LISCRYPT_VERSION,
+    HKDF_INFO_AES_KEY, HKDF_INFO_AES_NONCE_PREFIX,
+    MAGIC_BYTES
+)
+# TODO: Move exceptions to core to eliminate this dependency
+from ...common.exceptions import LiSCryptError
 
 
 class AESGCMV3Strategy:
@@ -47,7 +54,7 @@ class AESGCMV3Strategy:
             file_content = infile.read()
         
         # Generate random salt for Scrypt
-        salt = os.urandom(constants.SCRYPT_SALT_LENGTH)
+        salt = os.urandom(SCRYPT_SALT_LENGTH)
         
         # Calculate SHA512 of password (as original does)
         password_hash = hashlib.sha512(password.encode('utf-8')).digest()
@@ -56,9 +63,9 @@ class AESGCMV3Strategy:
         kdf = Scrypt(
             salt=salt,
             length=64,  # 512 bits for master key
-            n=constants.SCRYPT_N,
-            r=constants.SCRYPT_R,
-            p=constants.SCRYPT_P,
+            n=SCRYPT_N,
+            r=SCRYPT_R,
+            p=SCRYPT_P,
             backend=default_backend()
         )
         master_key = kdf.derive(password_hash)
@@ -67,14 +74,14 @@ class AESGCMV3Strategy:
         hkdf_key = HKDFExpand(
             algorithm=hashes.SHA512(),
             length=32,  # 256 bits for AES key
-            info=b'AES-GCM-V3-key',
+            info=HKDF_INFO_AES_KEY,
             backend=default_backend()
         )
         encryption_key = hkdf_key.derive(master_key)
         
         # Derive nonce using HKDF with counter (as original does)
         counter = 0  # First file with this key
-        info_nonce = b'AES-GCM-V3-nonce-' + str(counter).encode()
+        info_nonce = HKDF_INFO_AES_NONCE_PREFIX + str(counter).encode()
         hkdf_nonce = HKDFExpand(
             algorithm=hashes.SHA512(),
             length=12,  # 96 bits for GCM nonce
@@ -85,20 +92,20 @@ class AESGCMV3Strategy:
         
         # Create header (following original format exactly)
         header = b''
-        header += b'LiSX'  # Magic bytes
+        header += MAGIC_BYTES  # Magic bytes
         header += struct.pack('>H', method_id)  # Method ID
-        header += struct.pack('>Q', constants.SCRYPT_N)  # Scrypt N
-        header += struct.pack('>I', constants.SCRYPT_R)  # Scrypt r
-        header += struct.pack('>I', constants.SCRYPT_P)  # Scrypt p
-        header += struct.pack('>I', constants.SCRYPT_SALT_LENGTH)  # Salt length
+        header += struct.pack('>Q', SCRYPT_N)  # Scrypt N
+        header += struct.pack('>I', SCRYPT_R)  # Scrypt r
+        header += struct.pack('>I', SCRYPT_P)  # Scrypt p
+        header += struct.pack('>I', SCRYPT_SALT_LENGTH)  # Salt length
         header += salt  # Salt
-        header += struct.pack('>I', constants.AES_GCM_NONCE_LENGTH)  # Nonce length
+        header += struct.pack('>I', AES_GCM_NONCE_LENGTH)  # Nonce length
         header += nonce  # Nonce
         header += struct.pack('>Q', int(round(stat.st_mtime_ns)))  # Modification time
         header += struct.pack('>Q', int(round(stat.st_atime_ns)))  # Access time
         header += struct.pack('>Q', stat.st_size)  # File size
         header += struct.pack('>Q', len(original_filename.encode()))  # Filename length
-        header += struct.pack('>H', len(constants.REQUIRED_LISCRYPT_VERSION))  # Version length
+        header += struct.pack('>H', len(REQUIRED_LISCRYPT_VERSION))  # Version length
         
         # Create encryptor
         encryptor = Cipher(
@@ -118,7 +125,7 @@ class AESGCMV3Strategy:
             # Encrypt and write data in original order
             outfile.write(encryptor.update(b'\x00\x00\x00\x00\x00'))  # 5 null bytes
             outfile.write(encryptor.update(original_filename.encode()))  # Filename
-            outfile.write(encryptor.update(constants.REQUIRED_LISCRYPT_VERSION.encode()))  # Version
+            outfile.write(encryptor.update(REQUIRED_LISCRYPT_VERSION.encode()))  # Version
             outfile.write(encryptor.update(file_content))  # File content
             
             # Finalize encryption
@@ -163,7 +170,7 @@ class AESGCMV3Strategy:
             hkdf_key = HKDFExpand(
                 algorithm=hashes.SHA512(),
                 length=32,  # 256 bits for AES key
-                info=b'AES-GCM-V3-key',
+                info=HKDF_INFO_AES_KEY,
                 backend=default_backend()
             )
             encryption_key = hkdf_key.derive(master_key)
@@ -195,7 +202,7 @@ class AESGCMV3Strategy:
                 decrypted_data = decryptor.update(encrypted_data)
                 decryptor.finalize()
             except cryptography_exceptions.InvalidTag:
-                raise exceptions.AuthenticationError("Invalid password or corrupted file")
+                raise LiSCryptError("Invalid password or corrupted file")
             
             # Parse decrypted content
             offset = 0
@@ -232,8 +239,8 @@ class AESGCMV3Strategy:
         
         # Read magic bytes
         magic = file_obj.read(4)
-        if magic != b'LiSX':
-            raise exceptions.InvalidFileFormatError("Invalid magic bytes")
+        if magic != MAGIC_BYTES:
+            raise LiSCryptError("Invalid magic bytes")
         
         # Read method ID
         method_id = struct.unpack('>H', file_obj.read(2))[0]

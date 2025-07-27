@@ -27,6 +27,7 @@ from cryptography.hazmat.backends import default_backend
 from cryptography import exceptions as cryptography_exceptions
 
 from .base_strategy import BaseStrategy
+from ..crypto_constants import METHOD_CHACHA20_V3_1, MAGIC_BYTES
 from ...common import constants, exceptions
 from .. import key_derivation
 
@@ -242,7 +243,7 @@ class ChaCha20V3_1Strategy(BaseStrategy):
 
         header = b''
         header += b'LiSX'
-        header += struct.pack('>H', constants.METHOD_CHACHA20_V3_1)
+        header += struct.pack('>H', METHOD_CHACHA20_V3_1)
         header += struct.pack('>Q', constants.SCRYPT_N)
         header += struct.pack('>I', constants.SCRYPT_R)
         header += struct.pack('>I', constants.SCRYPT_P)
@@ -268,7 +269,7 @@ class ChaCha20V3_1Strategy(BaseStrategy):
         
         # Read method ID
         method_id = struct.unpack('>H', file_handle.read(2))[0]
-        if method_id != constants.METHOD_CHACHA20_V3_1:
+        if method_id != METHOD_CHACHA20_V3_1:
             raise exceptions.LiSCryptError(f"Unexpected method ID: {method_id}")
         
         # Read Scrypt parameters

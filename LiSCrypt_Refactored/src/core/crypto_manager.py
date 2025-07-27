@@ -22,15 +22,17 @@ import struct
 
 from .strategies.aes_gcm_v3 import AESGCMV3Strategy
 from .strategies.chacha20_v3_1 import ChaCha20V3_1Strategy
-from ..common import constants, exceptions
+from .crypto_constants import METHOD_AES_GCM_V3, METHOD_CHACHA20_V3_1, MAGIC_BYTES
+# TODO: Move exceptions to core to eliminate this dependency
+from ..common.exceptions import LiSCryptError
 
 class CryptoManager:
     """Manages encryption and decryption operations by selecting the appropriate strategy."""
 
     def __init__(self):
         self._strategies = {
-            constants.METHOD_AES_GCM_V3: AESGCMV3Strategy(),
-            constants.METHOD_CHACHA20_V3_1: ChaCha20V3_1Strategy(),
+            METHOD_AES_GCM_V3: AESGCMV3Strategy(),
+            METHOD_CHACHA20_V3_1: ChaCha20V3_1Strategy(),
             # Add other strategies here as they are implemented
         }
 
@@ -38,12 +40,12 @@ class CryptoManager:
         """Encrypts a file using the specified method."""
         strategy = self._strategies.get(method_id)
         if not strategy:
-            raise exceptions.LiSCryptError(f"Unsupported encryption method ID: {method_id}")
+            raise LiSCryptError(f"Unsupported encryption method ID: {method_id}")
         
         # For now, we only support password authentication in AES-GCM
         # Keyfile support can be added later if needed
         if keyfile_path:
-            raise exceptions.LiSCryptError("Keyfile authentication not yet supported")
+            raise LiSCryptError("Keyfile authentication not yet supported")
             
         strategy.encrypt(input_file_path, output_file_path, password, method_id)
 
@@ -52,12 +54,12 @@ class CryptoManager:
         method_id = self._get_method_id_from_file(input_file_path)
         strategy = self._strategies.get(method_id)
         if not strategy:
-            raise exceptions.LiSCryptError(f"Unsupported decryption method ID: {method_id}")
+            raise LiSCryptError(f"Unsupported decryption method ID: {method_id}")
             
         # For now, we only support password authentication in AES-GCM
         # Keyfile support can be added later if needed
         if keyfile_path:
-            raise exceptions.LiSCryptError("Keyfile authentication not yet supported")
+            raise LiSCryptError("Keyfile authentication not yet supported")
             
         strategy.decrypt(input_file_path, output_file_path, password)
 
@@ -65,7 +67,7 @@ class CryptoManager:
         """Reads the encryption method ID from the file header."""
         with open(file_path, 'rb') as f:
             magic_bytes = f.read(4)
-            if magic_bytes != b'LiSX':
-                raise exceptions.LiSCryptError("Not a LiSCrypt file.")
+            if magic_bytes != MAGIC_BYTES:
+                raise LiSCryptError("Not a LiSCrypt file.")
             method_id = struct.unpack('>H', f.read(2))[0]
         return method_id
